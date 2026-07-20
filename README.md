@@ -1,4 +1,4 @@
-# z-lib-manager (Autonomo 1)
+# z-lib-manager (Autónomo 1)
 
 Programación Orientada a Objetos / Ciberseguridad
 Planeación del Software
