@@ -16,7 +16,8 @@
 * Git.
 
 ### Ejecutar Servidor y Menú Interactivo
-go run main.go
+`go run main.go`
+
 El servidor HTTP iniciará en http://localhost:8080 de manera concurrente con la consola interactiva.
 
 El menú interactivo es el siguiente:
