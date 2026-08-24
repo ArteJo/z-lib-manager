@@ -7,15 +7,8 @@ import (
 	"github.com/ArteJo/z-lib-manager/inventario" // Referencia local externa
 )
 
-// Renderizador abstrae la generación visual del reporte
-type Renderizador interface {
-	Renderizar(libros []*inventario.Libro, criterioNombre string) error
-}
-
-type ReporteConsola struct{}
-
 // Plantilla para el reporte de libros electrónicos filtrados
-const plantillaFormato = `
+const PlantillaConsola = `
 REPORTE DE LIBROS: {{.Criterio}}
 ======================================================
 Total encontrados: {{len .Libros}}
@@ -26,6 +19,7 @@ Autor:       {{.Autor}}
 Género:      {{.Genero}}
 Año:         {{.Anio}}
 Popularidad: {{.Popularidad}} / 5 estrellas
+Editorial:   {{.Editorial}} (Edición {{.Edicion}})
 ------------------------------------------------------
 {{end}}======================================================
 `
@@ -35,16 +29,10 @@ type DatosReporte struct {
 	Libros   []*inventario.Libro
 }
 
-func (r ReporteConsola) Renderizar(libros []*inventario.Libro, criterioNombre string) error {
-	tmpl, err := template.New("reporte").Parse(plantillaFormato)
+func RenderizarConsola(libros []*inventario.Libro, tituloReporte string) error {
+	t, err := template.New("rep").Parse(PlantillaConsola)
 	if err != nil {
 		return err
 	}
-
-	datos := DatosReporte{
-		Criterio: criterioNombre,
-		Libros:   libros,
-	}
-
-	return tmpl.Execute(os.Stdout, datos)
+	return t.Execute(os.Stdout, DatosReporte{Criterio: tituloReporte, Libros: libros})
 }
