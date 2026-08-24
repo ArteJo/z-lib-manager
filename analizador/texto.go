@@ -10,30 +10,31 @@ import (
 
 // AuditorTexto define el contrato para la revisión de metadatos y resúmenes
 type AuditorTexto interface {
-	Auditar(texto string) error
+	Auditar(texto string) (string, error)
 }
 
 // AuditorResumen implementa AuditorTexto mediante búferes optimizados
 type AuditorResumen struct{}
 
-func (a AuditorResumen) Auditar(texto string) (err error) {
-	// Manejo excepcional con defer y recover para evitar caídas catastróficas
+// Auditar procesa el título o texto utilizando bytes.Buffer y el paquete externo
+func (a AuditorResumen) Auditar(texto string) (resumen string, err error) {
+	// Captura defensiva de pánicos en tiempo de ejecución con defer y recover
 	defer func() {
 		if r := recover(); r != nil {
-			err = fmt.Errorf("recuperado de un error crítico de procesamiento: %v", r)
+			err = fmt.Errorf("error crítico en el análisis de texto: %v", r)
 		}
 	}()
 
 	if texto == "" {
-		return errors.New("el texto a auditar no puede estar vacío")
+		return "", errors.New("el texto a auditar no puede estar vacío")
 	}
 
 	var buf bytes.Buffer
-	buf.WriteString("Auditando metadatos de texto: ")
-	fmt.Fprintf(&buf, "\"%s\"", texto)
-	fmt.Println(buf.String())
+	buf.WriteString("\n[Auditoría de Texto]:\n")
+	fmt.Fprintf(&buf, "Cadena evaluada: \"%s\"\n", texto)
 
-	// Paquete externo de terceros
+	// Llamada a la función del paquete externo de GitHub
 	analizador.PrintEstadistica(texto)
-	return nil
+	return buf.String(), nil
 }
+
