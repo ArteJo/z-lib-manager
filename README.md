@@ -1,8 +1,11 @@
 # z-lib-manager: Sistema de Gestión de Libros Electrónicos
 
 **Carrera:** Ingeniería en Ciberseguridad
+
 **Institución:** Universidad Internacional del Ecuador (UIDE)
+
 **Asignatura:** Programación Orientada a Objetos en Go
+
 **Fecha:** 23/08/2026
 
 ## Descripción Conceptual
